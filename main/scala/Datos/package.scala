@@ -1,12 +1,37 @@
-
+import org.scalameter._
 package object Datos {
   case class Aeropuerto(Cod: String, X: Int, Y: Int, GMT: Int)
 
   case class Vuelo(Aln: String, Num: Int, Org: String, HS: Int, MS: Int, Dst: String, HL: Int, ML: Int, Esc: Int)
 
   type Itinerario = List[Vuelo]
-  //type ItinerarioPar = ParSeq[Vuelo]
 
+  //Funcion para comparar tiempos
+  def compararAlgoritmos(a1: (String, String) => List[Itinerario], a2: (String, String) => List[Itinerario])
+                        (origen: String, destino: String): (Double, Double, Double) = {
+
+    val timeA1 = config(
+      KeyValue(Key.exec.minWarmupRuns -> 20),
+      KeyValue(Key.exec.maxWarmupRuns -> 60),
+      KeyValue(Key.verbose -> false)
+    ) withWarmer(new Warmer.Default) measure {
+      a1(origen, destino)
+    }
+
+    val timeA2 = config(
+      KeyValue(Key.exec.minWarmupRuns -> 20),
+      KeyValue(Key.exec.maxWarmupRuns -> 60),
+      KeyValue(Key.verbose -> false)
+    ) withWarmer(new Warmer.Default) measure {
+      a2(origen, destino)
+    }
+
+    val speedUp = timeA1.value / timeA2.value
+    (timeA1.value, timeA2.value, speedUp)
+  }
+
+  //type ItinerarioPar = ParSeq[Vuelo]
+  /*
   val aeropuertosCurso = List(
 
     Aeropuerto("CLO", 100, 200, -500), // Cali
@@ -45,7 +70,7 @@ package object Datos {
     Vuelo("COPA", 7631, "SMR", 10, 50, "PTY", 11, 50, 0),
     Vuelo("TURKISH", 7799, "CLO", 7, 0, "IST", 14, 0, 3),
     Vuelo("QATAR", 5566, "IST", 23, 0, "SVO", 2, 0, 0),
-  )
+  )*/
   // Venezuela aislada, Cali Moscu, Cali CDMX pasando por Bogota vs pasando por Mde - Baq, CTG - PTY directo o pasando
   // por SMR, Cali Moscu por Estambul tiene 4 escalas pero 2 vuelos, Cali Moscu por Madrid tiene 3 vuelos y 3 escalas
   // pero llega más temprano
@@ -77,8 +102,8 @@ package object Datos {
     Aeropuerto("STL", 380, 210, -700),
     Aeropuerto("TPA", 500, 360, -600)
   )
-
- /* val vuelos=List(
+/*
+  val vuelos=List(
     Vuelo("4X", 373, "HOU", 13, 15, "MSY", 15, 10, 1),
     Vuelo("4X", 201, "MSY", 8, 35, "HOU", 12, 20, 2),
     Vuelo("4X", 372, "MSY", 11, 0, "HOU", 12, 55, 1),
@@ -2976,12 +3001,12 @@ package object Datos {
     Vuelo("ZK", 403, "DEN", 11, 20, "ORD", 17, 20, 4),
     Vuelo("ZK", 38, "MSP", 16, 20, "ORD", 19, 5, 2),
     Vuelo("ZK", 76, "DEN", 8, 45, "ORD", 15, 15, 5)
-  )*/
-
+  )
+  */
   //________________________________________________________
 
   //longitud 15
-
+/*
   val vuelosA1= List(
     Vuelo("4X", 373, "HOU", 13, 15, "MSY", 15, 10, 1),
     Vuelo("4X", 201, "MSY", 8, 35, "HOU", 12, 20, 2),
@@ -3289,7 +3314,7 @@ package object Datos {
     Vuelo("CO", 131, "DCA", 6, 45, "LAX", 13, 44, 2),
     Vuelo("CO", 846, "PHX", 14, 35, "ATL", 11, 46, 1)
   )
-
+*/
   //__________________________________________________
 
   //longitud 100
@@ -4316,7 +4341,7 @@ package object Datos {
     Vuelo("PA", 436, "MIA", 17, 35, "BOS", 10, 56, 0)
   )
 
-/*  val vuelosD2= List(
+  val vuelosD2= List(
     Vuelo("PA", 427, "JFK", 14, 45, "MIA", 17, 57, 0),
     Vuelo("PA", 482, "LAX", 18, 0, "SFO", 19, 17, 0),
     Vuelo("PA", 429, "BOS", 14, 20, "MIA", 17, 44, 0),
@@ -5320,5 +5345,5 @@ package object Datos {
     Vuelo("WN", 603, "LAX", 7, 0, "BNA", 13, 55, 1),
     Vuelo("WN", 663, "STL", 21, 20, "HOU", 13, 15, 0),
     Vuelo("WN", 952, "LAX", 11, 15, "PHX", 13, 25, 0)
-  )*/
+  )
 }

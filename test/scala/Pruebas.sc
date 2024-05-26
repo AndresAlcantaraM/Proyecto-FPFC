@@ -1,4 +1,5 @@
 import Itinerarios._
+import ItinerariosPar._
 import Datos._
 
 // Datos de ejemplo
@@ -42,18 +43,33 @@ val vuelosCurso = List(
   Vuelo("QATAR", 5566, "IST", 23, 0, "SVO", 2, 0, 0)
 )
 
+val ejemplo1 = itinerarios(vuelosCurso, aeropuertosCurso)
+val ejemplo2 = itinerariosPar(vuelosCurso,aeropuertosCurso)
+
+val prueba1 = compararAlgoritmos(ejemplo1, ejemplo2)("CLO", "SVO")
+
+
+val ejemplo1 = itinerariosTiempo(vuelosCurso, aeropuertosCurso)
+val ejemplo2 = itinerariosTiempoPar(vuelosCurso,aeropuertosCurso)
+
+val prueba2 =compararAlgoritmos(ejemplo1, ejemplo2)("CLO", "SVO")
+
 // Uso de la función 3.1
 val itsCurso = itinerarios(vuelosCurso, aeropuertosCurso)
+val itsCursoPar = itinerariosPar(vuelosCurso,aeropuertosCurso)
 val its1 = itsCurso("MID", "SVCS")
 val its2 = itsCurso("CLO", "SVCS")
 val its3 = itsCurso("CLO", "SVO")
+val its3Par = itsCursoPar("CLO", "SVO")
 val its4 = itsCurso("CLO","MEX")
 val its5 = itsCurso("CTG","PTY")
 
 //Uso de la función 3.2
 val itsTiempoCurso = itinerariosTiempo(vuelosCurso, aeropuertosCurso)
+val itsTiempoCursoPar = itinerariosTiempoPar(vuelosCurso,aeropuertosCurso)
 val itst1 = itsTiempoCurso("MID", "SVCS")
 val itst2 = itsTiempoCurso("CLO", "SVCS")
 val itst3 = itsTiempoCurso("CLO", "SVO")
+val its3Par = itsTiempoCursoPar("CLO", "SVO")
 val itst4 = itsTiempoCurso("CLO", "MEX")
 val itst5 = itsTiempoCurso("CTG", "PTY")
