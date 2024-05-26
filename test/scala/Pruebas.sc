@@ -1,4 +1,5 @@
 import Itinerarios._
+import Datos._
 
 // Datos de ejemplo
 val aeropuertosCurso = List(
@@ -56,6 +57,3 @@ val itst2 = itsTiempoCurso("CLO", "SVCS")
 val itst3 = itsTiempoCurso("CLO", "SVO")
 val itst4 = itsTiempoCurso("CLO", "MEX")
 val itst5 = itsTiempoCurso("CTG", "PTY")
-
-
-
