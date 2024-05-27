@@ -1,5 +1,6 @@
 import common._
 import Datos._
+import scala.collection.parallel.CollectionConverters._ //revisar
 package object ItinerariosPar {
 
   // 3.1
