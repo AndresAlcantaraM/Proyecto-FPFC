@@ -1,6 +1,4 @@
 import Datos._
-import scala.collection.parallel.CollectionConverters._ //revisar
-
 package object Itinerarios {
 
   //3.1
