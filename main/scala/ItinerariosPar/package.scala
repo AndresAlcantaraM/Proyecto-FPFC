@@ -55,6 +55,24 @@ package object ItinerariosPar {
   }
 }
 
+//3.3
+def itinerariosEscalasPar(vuelos: List[Vuelo], aeropuertos: List[Aeropuerto]): (String, String) => List[Itinerario] = {
+  (origen: String, destino: String) => {
+    val obtenerItinerarios = itinerariosPar(vuelos, aeropuertos)(origen, destino)
+
+    def escalasTotales(itinerario: Itinerario): Int = {
+      itinerario.map(_.Esc).sum + (itinerario.length - 1)
+    }
+
+    obtenerItinerarios
+      .map(itinerario => task((itinerario, escalasTotales(itinerario))))
+      .map(_.join())
+      .sortBy(_._2)
+      .take(3)
+      .map(_._1)
+  }
+}
+
 //3.4
   def itinerariosAirePar(vuelos: List[Vuelo], aeropuertos: List[Aeropuerto]): (String, String) => List[Itinerario] = {
 
