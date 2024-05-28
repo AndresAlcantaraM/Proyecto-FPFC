@@ -244,6 +244,16 @@ val its3Par = itsTiempoCursoPar("CLO", "SVO")
 val itst4 = itsTiempoCurso("CLO", "MEX")
 val itst5 = itsTiempoCurso("CTG", "PTY")
 
+//Uso de la función 3.3
+val itsEscalasCurso= itinerariosEscalas(vuelosCurso,aeropuertosCurso)
+val itsEscalasCursoPar= itinerariosEscalasPar(vuelosCurso,aeropuertosCurso)
+val itsc1 = itsEscalasCurso("MID", "SVCS")
+val itsc2 = itsEscalasCurso("CLO", "SVCS")
+val itsc3 = itsEscalasCurso("CLO","SVO")
+val itsc3Par = itsEscalasCursoPar("CLO","SVO")
+val itsc4 = itsEscalasCurso("CLO", "MEX")
+val itsc5 = itsEscalasCurso("CTG","PTY")
+
 //Uso de la función 3.4
 val itsAireCurso = itinerariosAire(vuelosCurso, aeropuertosCurso)
 val itsAireCursoPar = itinerariosAirePar(vuelosCurso,aeropuertosCurso)
