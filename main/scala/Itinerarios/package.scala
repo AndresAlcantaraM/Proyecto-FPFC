@@ -46,6 +46,19 @@ package object Itinerarios {
   }
 }
 
+  //3.3
+  def itinerariosEscalas(vuelos: List[Vuelo], aeropuertos: List[Aeropuerto]): (String, String) => List[Itinerario] = {
+
+    (origen: String, destino: String) => {
+      itinerarios(vuelos, aeropuertos)(origen, destino)
+        .sortBy(itinerario =>
+          itinerario.map(_.Esc).sum
+            + itinerario.length - 1
+        )
+        .take(3)
+    }
+  }
+
 //3.4
 
   def itinerariosAire(vuelos: List[Vuelo], aeropuertos: List[Aeropuerto]): (String, String) => List[Itinerario] = {
