@@ -102,7 +102,7 @@ Esta versión define dos funciones auxiliares, cuyos procesos ya fueron vistos e
 
 #### ***Función obtenerItinerarios:*** 
 Obtiene los itinerarios de manera paralela con la función ya definida itinerariosPar.
-#### ***Función escalasTotales: ***
+#### ***Función escalasTotales:***
 Calcula el total de escalas para un itinerario dado.
 
 Luego la paralización se logra mediante:
