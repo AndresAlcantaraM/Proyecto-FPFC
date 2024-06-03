@@ -69,7 +69,51 @@ Para cada itinerario encontrado:
 - Llama a obtenerItinerarios con el aeropuerto de origen y destino especificados.
 - Procesa los itinerarios encontrados para calcular sus tiempos totales y selecciona los tres mejores.
 
+## **3.3 Funcion itinerariosEscalas**
 
+### Propósito:
+Hacer escalas muchas veces en un viaje es algo a lo que los viajeros aéreos le huyen. La consulta consiste en hallar al menos tres itinerarios para ir de cod1 a cod2, que hagan el menor número de escalas, sin tener en cuenta el tiempo total de viaje.
+
+### Explicación de las funciones:
+
+
+#### ***Función Principal (itinerariosEscalas):***
+La función recibe dos listas como argumentos: una lista de objetos “Vuelo” y otra de objetos “Aeropuerto”. Retorna una función que toma un aeropuerto de origen y uno de destino para calcular los tres mejores itinerarios basados en el número mínimo de escalas.
+
+#### ***Funcion auxiliar (itinerarios)***
+
+Como ya se ha dicho, esta recibe una lista de vuelos y una lista de aeropuertos. Devuelve una función que, dado un aeropuerto de origen (c1) y un aeropuerto de destino (c2), encuentra todos los itinerarios posibles entre ellos.
+
+#### ***Parámetros (origen: String, destino: String):***
+Son los parámetros que la función principal retorna. Estos parámetros se utilizan para especificar el aeropuerto de inicio y el aeropuerto final del itinerario deseado.
+
+#### ***Cuerpo de la función:***
+
+sortBy: Ordena los itinerarios primero por la suma total de las escalas (_.Esc.sum) y luego por el número total de vuelos en el itinerario menos uno (ya que el primer vuelo no se considera una escala).
+take(3): Selecciona los tres itinerarios superiores después de ordenarlos.Uso:
+
+#### ***Tecnicas usadas:***
+
+Operaciones: 
+.map, (_.Esc), .sum, .length, .take(3)
+
+### Version paralelizada:
+Esta versión define dos funciones auxiliares, cuyos procesos ya fueron vistos en la versión secuencial, pero se hace para que sea más ordenado y lograr la paralelización.
+
+#### ***Función obtenerItinerarios:*** 
+Obtiene los itinerarios de manera paralela con la función ya definida itinerariosPar.
+#### ***Función escalasTotales: ***
+Calcula el total de escalas para un itinerario dado.
+
+Luego la paralización se logra mediante:
+#### ***task:*** 
+Crea una tarea paralela para cada itinerario, lo que permite que se procesen simultáneamente.
+#### ***join()***: 
+Espera a que la tarea paralela se complete y recupera el resultado.
+#### ***sortBy y take(3)***: 
+Funcionan igual que en la versión no paralela, seleccionando los tres mejores itinerarios basados en el total de escalas.
+#### ***map(_._1)***: 
+Extrae el itinerario del par (itinerario, total de escalas) para cada resultado.
 
 
 ## **3.4 Funcion itinerariosAire**
