@@ -1,16 +1,16 @@
 # Proyecto-FPFC
 Proyecto final de Fundamentos de Programación Funcional y Concurrente
 
-## Función itinerarios
+## **3.1 Función itinerarios**
 ### Propósito: 
 Encontrar todos los posibles itinerarios (secuencias de vuelos) entre dos aeropuertos dados.
 ### Explicación:
-### Función Principal (itinerarios):
+### ***Función Principal (itinerarios):***
 
 - Recibe una lista de vuelos y una lista de aeropuertos.
 - Devuelve una función que, dado un aeropuerto de origen (c1) y un aeropuerto de destino (c2), encuentra todos los itinerarios posibles entre ellos.
 
-### Función Auxiliar (buscarItinerarios):
+### ***Función Auxiliar (buscarItinerarios):***
 
 ### Parámetros:
 
@@ -38,7 +38,7 @@ Para cada vuelo válido:
 
 Llama a buscarItinerarios con el aeropuerto de origen y destino especificados, un conjunto vacío de visitados y un itinerario vacío.
 
-## Función itinerariosTiempo
+## **3.2 Función itinerariosTiempo**
 ### Propósito: 
 Encontrar los tres itinerarios que minimizan el tiempo de viaje entre dos aeropuertos dados.
 
