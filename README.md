@@ -173,3 +173,57 @@ Para invocar la función `itinerariosAire`, se deben proporcionar dos listas: un
 ```scala
 val obtenerMejoresItinerarios = itinerariosAire(listaVuelos, listaAeropuertos)
 val mejoresItinerarios = obtenerMejoresItinerarios("CLO", "SVO")
+```
+## **3.5 Función itinerariosSalida**
+
+### Propósito:
+La función `itinerariosSalida` está diseñada para encontrar el mejor itinerario entre dos aeropuertos, que llegue a su destino antes de una hora específica. Es particularmente útil para situaciones en las que se debe llegar a un lugar a tiempo para una cita o evento.
+
+### Explicación de las funciones:
+
+#### ***Función Principal (itinerariosSalida):***
+La función principal `itinerariosSalida` recibe dos listas: una lista de objetos `Vuelo` y otra de objetos `Aeropuerto`. Retorna una función que, al ser invocada con un aeropuerto de origen, un aeropuerto de destino, una hora y un minuto, calcula el mejor itinerario que llegue antes de la hora especificada.
+
+#### ***Funcion auxiliar (itinerarios)***
+
+Esta función, que recibe una lista de vuelos y una lista de aeropuertos, devuelve una función que, dado un aeropuerto de origen (c1) y un aeropuerto de destino (c2), encuentra todos los itinerarios posibles entre ellos.
+
+#### ***Parámetros (origen: String, destino: String, h: Int, m: Int):***
+Estos parámetros son usados por la función que retorna `itinerariosSalida` para especificar el aeropuerto de inicio, el aeropuerto final y la hora límite (en horas y minutos) antes de la cual se debe llegar al destino.
+
+#### ***Cuerpo de la función:***
+
+**aeropuertosMap:**
+Convierte la lista de aeropuertos en un mapa (`Map`) para facilitar el acceso a los datos de cada aeropuerto mediante su código.
+
+**obtenerItinerarios:**
+Obtiene todos los itinerarios posibles entre los aeropuertos de origen y destino utilizando la función auxiliar `itinerarios`.
+
+**horaCitaEnMinutos:**
+Convierte la hora y los minutos de la cita a un total de minutos desde medianoche, para facilitar las comparaciones.
+
+**itinerariosValidos:**
+Filtra los itinerarios para encontrar aquellos que llegan al destino antes de la hora límite especificada. 
+
+- **llegadaItinerarioEnMinutos:**
+  Calcula la hora de llegada en minutos para cada itinerario, ajustando las diferencias horarias entre los aeropuertos de origen y destino.
+
+**maxBy:**
+Selecciona el itinerario válido que sale más tarde del aeropuerto de origen y aún llega antes de la hora límite.
+
+**if (itinerariosValidos.isEmpty):**
+Si no se encuentran itinerarios válidos, retorna una lista vacía.
+
+### ***Técnicas utilizadas:***
+
+- **Operaciones de mapeo y filtrado:**
+  - `.map` convierte la lista de aeropuertos en un mapa para acceso rápido.
+  - `.filter` selecciona los itinerarios que llegan antes de la hora límite.
+  - `.maxBy` encuentra el itinerario que sale más tarde pero aún llega a tiempo.
+
+### ***Uso:***
+Para invocar la función `itinerariosSalida`, se deben proporcionar dos listas: una de vuelos y otra de aeropuertos. La función resultante se llama con los códigos de los aeropuertos de origen y destino, y la hora límite de llegada en horas y minutos.
+
+```scala
+val obtenerMejorItinerario = itinerariosSalida(listaVuelos, listaAeropuertos)
+val mejorItinerario = obtenerMejorItinerario("CLO", "SVO", 10, 30)
