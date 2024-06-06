@@ -116,56 +116,33 @@ Funcionan igual que en la versión no paralela, seleccionando los tres mejores i
 Extrae el itinerario del par (itinerario, total de escalas) para cada resultado.
 
 
-## **3.4 Funcion itinerariosAire**
+## **3.4 Función itinerariosAire**
 
 ### Propósito:
-Minimizar el tiempo que están en el aire, el cual es proporcional a la distancia entre los aeropuertos. Su consulta consiste en hallar al menos tres itinerarios para ir de cod1 a cod2 (si los hay) que minimicen el tiempo de vuelo, sin tener en cuenta el tiempo total de viaje (podría ser mejor un menor tiempo de vuelo, aunque haya mayores tiempos de espera en tierra).
+Para muchos viajeros, el tiempo total de vuelo es un factor crucial en la planificación de sus viajes. Esta consulta se encarga de encontrar al menos tres itinerarios entre un aeropuerto de origen y un destino, priorizando aquellos con el menor tiempo total de vuelo.
 
 ### Explicación de las funciones:
 
-
 #### ***Función Principal (itinerariosAire):***
+La función principal `itinerariosAire` recibe dos listas: una lista de objetos `Vuelo` y otra de objetos `Aeropuerto`. Retorna una función que, al ser invocada con un aeropuerto de origen y uno de destino, calcula los tres mejores itinerarios basados en el menor tiempo total de vuelo.
 
-- Recibe una lista de Vuelos y una lista de Aeropuertos
-- Devuelve una funcion que dado a partir de obtener los codigos de aeropuertos de destino y origen (c1 y c2); pueda devolver una lista con hasta 3 itinerarios los cuales minimizan el tiempo en el aire entre ambos aeropuertos
+#### ***Función auxiliar (itinerarios):***
+Esta función, que recibe una lista de vuelos y una lista de aeropuertos, devuelve una función que, dado un aeropuerto de origen (c1) y un aeropuerto de destino (c2), encuentra todos los itinerarios posibles entre ellos.
 
+#### ***Parámetros (origen: String, destino: String):***
+Son los parámetros que la función principal retorna. Estos parámetros se utilizan para especificar el aeropuerto de inicio y el aeropuerto final del itinerario deseado.
 
-#### ***Funcion auxiliar (distancia)***
+#### ***Cuerpo de la función:***
 
-Esta funcio lo que hace es calcular la distancia que existe entre C1 y C2 (aeropuerto de origen y destino), a partir de sus coordenadas 
+- **convertirAGMT:**
+  Convierte la hora local de salida y llegada de un vuelo a minutos en GMT (Tiempo Medio de Greenwich). Toma en cuenta las diferencias horarias entre los aeropuertos de origen y destino.
 
-- Recibe a1 y a2 las cuales son las coordenadad de los aeropuertos seleccionados
-- Realiza el calculo restando sus distancias en X y Y 
-- Finalmente devuelve el valor obtenido del calculo sqrt(dX * dX + dY * dY)
+- **calcularTiempoVuelo:**
+  Calcula el tiempo total de vuelo para un itinerario dado. Suma el tiempo de todos los vuelos en el itinerario, considerando las conversiones a GMT para una comparación precisa.
 
+- **buscarMejoresItinerarios:**
+  Busca los mejores itinerarios entre dos aeropuertos. Si hay tres o menos itinerarios posibles, los retorna todos. Si hay más de tres, selecciona los tres con el menor tiempo total de vuelo.
 
-#### ***Funcion auxiliar (encontrarAeropuerto)***
-
-Tal y como lo dice, lo que se hace aqui es encontar los aeropuertos, donde a su vez validamos que estos existan:
-
-- Recibe el codigo del aeropuerto a buscar (cod) de tipo string
-- Luego lo que se hace es validar que el codigo del aeropuerto pasado realmente exista, si esto es asi entonces.
-- La funcion retorna un contenedor (Option) en el cual estan los aeropuertos.
-
-
-
-#### ***Funcion auxiliar (dfs):***
-
-- Recibe: actual (codigo del aeropuerto en el que nos encontramos), destino (codigo del aeropuerto de destino), ruta (las listas con los vuelos), distTotal (La distancia recorrida hasta el momento), visitados (los codigos de los aeropuertos qeu ya han sido visitados) y mejores (una lista donde se almacenan las mejores rutas encontradas).
-- Lo que se realiza en la funcion es primero conocer donde donde estamos (esto lo hace en el primer if), apartir de esto, empezamos a comparar las rutas con los mejores casos y los almacenamos en la lista de mejores. (en el primer else) lo que se hace es una exploracion recursiva donde exploramos todos los vuelos posibles entre el aeropuerto de origen y destino (hacemos llamado a distancia para calcular la distancia); una vez obtenidos todos los vuelo hacemos un llamado recursivo a **dfs** para obtener los mejores vuelos.
-- Finalmente obtenemos como resultado una lista con los mejores vuelos obtenidos de manera ordenada.
-
-
-### Uso:
-
-A partir de la utilizacion de los codigos de los aeropuetos de origen, destino y la lista de los vuelos, lo que se busca es hallar vuelos los cuales permanezcan el menor tiempo posible en el aire que vallan desde el origen hasta el destino.
-
-### Tecnicas usadas:
-
-- Operaciones sobre secuencias (.map / .flatMap / etc)
-- Operacines sobre listas (enqueue / dequeue / etc)
-- Contenedores
-- Recursion (de tipo arbol, ya que primero explora todas las ramas y luego filtra los resultados)
 
 ### Version paralelizada:
 
