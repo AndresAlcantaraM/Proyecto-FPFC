@@ -126,7 +126,8 @@ Para muchos viajeros, el tiempo total de vuelo es un factor crucial en la planif
 #### ***Función Principal (itinerariosAire):***
 La función principal `itinerariosAire` recibe dos listas: una lista de objetos `Vuelo` y otra de objetos `Aeropuerto`. Retorna una función que, al ser invocada con un aeropuerto de origen y uno de destino, calcula los tres mejores itinerarios basados en el menor tiempo total de vuelo.
 
-#### ***Función auxiliar (itinerarios):***
+#### ***Funcion auxiliar (itinerarios)***
+
 Esta función, que recibe una lista de vuelos y una lista de aeropuertos, devuelve una función que, dado un aeropuerto de origen (c1) y un aeropuerto de destino (c2), encuentra todos los itinerarios posibles entre ellos.
 
 #### ***Parámetros (origen: String, destino: String):***
@@ -134,17 +135,41 @@ Son los parámetros que la función principal retorna. Estos parámetros se util
 
 #### ***Cuerpo de la función:***
 
-- **convertirAGMT:**
-  Convierte la hora local de salida y llegada de un vuelo a minutos en GMT (Tiempo Medio de Greenwich). Toma en cuenta las diferencias horarias entre los aeropuertos de origen y destino.
+**convertirAGMT:**
+Convierte la hora local de salida y llegada de un vuelo a minutos en GMT (Tiempo Medio de Greenwich). Toma en cuenta las diferencias horarias entre los aeropuertos de origen y destino.
 
-- **calcularTiempoVuelo:**
-  Calcula el tiempo total de vuelo para un itinerario dado. Suma el tiempo de todos los vuelos en el itinerario, considerando las conversiones a GMT para una comparación precisa.
+- **gmtSalida y gmtLlegada:**
+  Calculan la diferencia horaria (GMT) del aeropuerto de origen y destino respectivamente, utilizando el código del aeropuerto.
 
-- **buscarMejoresItinerarios:**
-  Busca los mejores itinerarios entre dos aeropuertos. Si hay tres o menos itinerarios posibles, los retorna todos. Si hay más de tres, selecciona los tres con el menor tiempo total de vuelo.
+- **horaSalidaGMT y horaLlegadaGMT:**
+  Convierte las horas de salida y llegada del vuelo a minutos en GMT, ajustando las diferencias horarias. Si la hora de llegada es anterior a la de salida, ajusta la hora de llegada sumando 1440 minutos (24 horas) para corregir el cálculo.
 
+**calcularTiempoVuelo:**
+Calcula el tiempo total de vuelo para un itinerario dado. Suma el tiempo de todos los vuelos en el itinerario, considerando las conversiones a GMT para una comparación precisa.
 
-### Version paralelizada:
+- **map y sum:**
+  Itera sobre cada vuelo en el itinerario, calculando el tiempo de vuelo en minutos utilizando la función `convertirAGMT`, y suma estos tiempos para obtener el tiempo total del itinerario.
 
-la version con paralelismo en ni no cambia mucho su estructura, la unica parte donde cambia, es en la exploracion de los posibles vuelos, donde aplicamos la paralelizacion para poder explorar "multiples vuelos a la vez"
+**buscarMejoresItinerarios:**
+Busca los mejores itinerarios entre dos aeropuertos. Si hay tres o menos itinerarios posibles, los retorna todos. Si hay más de tres, selecciona los tres con el menor tiempo total de vuelo.
 
+- **posiblesItinerarios:**
+  Obtiene todos los itinerarios posibles entre el aeropuerto de origen y el aeropuerto de destino utilizando la función auxiliar `itinerarios`.
+
+- **sortBy y take(3):**
+  Ordena los itinerarios por el tiempo total de vuelo en minutos, en orden ascendente, y selecciona los tres itinerarios con el menor tiempo total.
+
+### ***Técnicas utilizadas:***
+
+- **Operaciones de mapeo y reducción:**
+  - `.map` se utiliza para transformar cada vuelo a su tiempo de vuelo en minutos en GMT.
+  - `.sum` se utiliza para sumar estos tiempos de vuelo y obtener el tiempo total del itinerario.
+  - `.sortBy` ordena los itinerarios por el tiempo total de vuelo.
+  - `.take(3)` selecciona los tres mejores itinerarios basados en el menor tiempo total de vuelo.
+
+### ***Uso:***
+Para invocar la función `itinerariosAire`, se deben proporcionar dos listas: una de vuelos y otra de aeropuertos. La función resultante se llama con los códigos de los aeropuertos de origen y destino para obtener los mejores itinerarios. 
+
+```scala
+val obtenerMejoresItinerarios = itinerariosAire(listaVuelos, listaAeropuertos)
+val mejoresItinerarios = obtenerMejoresItinerarios("CLO", "SVO")
